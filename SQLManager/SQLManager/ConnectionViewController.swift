@@ -16,6 +16,8 @@ class ConnectionViewController: UIViewController {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
         tf.placeholder = "Адрес сервера БД"
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         return tf
     }()
     
@@ -23,6 +25,8 @@ class ConnectionViewController: UIViewController {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
         tf.placeholder = "Имя входа"
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         return tf
     }()
     
@@ -30,6 +34,9 @@ class ConnectionViewController: UIViewController {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
         tf.placeholder = "Пароль"
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
+        tf.isSecureTextEntry = true
         return tf
     }()
     
@@ -37,13 +44,16 @@ class ConnectionViewController: UIViewController {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
         tf.placeholder = "Название БД"
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
         return tf
     }()
     
-    private let connectButton: FlatButton = {
+    private lazy var connectButton: FlatButton = {
         let bttn = FlatButton()
         bttn.cornerRadius = 15
         bttn.setTitle("Соединиться", for: .normal)
+        bttn.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
         return bttn
     }()
     
@@ -54,9 +64,11 @@ class ConnectionViewController: UIViewController {
         return view
     }()
     
+    private let viewModel = ViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .systemBackground
         
         setupConstraints()
@@ -90,7 +102,7 @@ class ConnectionViewController: UIViewController {
             make.top.equalTo(view).offset(610)
             make.bottom.equalTo(connectButton.snp.top).offset(-54)
         }
-
+        
         passwordTextField.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(view).offset(24)
             make.right.equalTo(view).offset(-24)
@@ -117,6 +129,51 @@ class ConnectionViewController: UIViewController {
             make.right.equalTo(view).offset(-24)
             make.top.equalTo(view).offset(124)
             make.bottom.equalTo(serverAddressTextField.snp.top).offset(-24)
+        }
+    }
+    
+    @objc private func connectButtonTapped() {
+        viewModel.connect(serverAddressTextField.text,
+                          username: userNameTextField.text,
+                          password: passwordTextField.text,
+                          database: databaseTextField.text) { [weak self] result in
+            do {
+                let value = try result()
+                if value {
+                    guard let viewModel = self?.viewModel else { return }
+                    
+                    let vc = MainViewController(viewModel: viewModel)
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.modalTransitionStyle = .flipHorizontal
+                    self?.present(vc, animated: true)
+                }
+            } catch {
+                guard let error = error as? ConnectionErrors else {
+                    let alert = UIAlertController(title: "Неизвестная ошибка",
+                                                  message: "",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ок",
+                                                  style: .default))
+                    self?.present(alert, animated: true)
+                    return
+                }
+                switch error {
+                case .emptyFields:
+                    let alert = UIAlertController(title: "Укажите данные",
+                                                  message: "Заполните все поля",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ок",
+                                                  style: .default))
+                    self?.present(alert, animated: true)
+                case .connectionDenied:
+                    let alert = UIAlertController(title: "Подключение отклонено",
+                                                  message: "Проверьте корректность введеных данных",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ок",
+                                                  style: .default))
+                    self?.present(alert, animated: true)
+                }
+            }
         }
     }
     
