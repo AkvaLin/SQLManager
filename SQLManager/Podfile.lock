@@ -1,16 +1,24 @@
 PODS:
+  - SnapKit (5.6.0)
   - SQLClient (1.0.0)
+  - SwiftyButton (0.8.2)
 
 DEPENDENCIES:
+  - SnapKit
   - SQLClient (~> 1.0.0)
+  - SwiftyButton
 
 SPEC REPOS:
   trunk:
+    - SnapKit
     - SQLClient
+    - SwiftyButton
 
 SPEC CHECKSUMS:
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SQLClient: 262f95dad0467f173bbca5a7cb4fdcaa6c08affd
+  SwiftyButton: 5b0ef314e9cf61cf8a83e456ddd1ea1f53f30598
 
-PODFILE CHECKSUM: 996c3d36595b8e7cabf1b41a87615f160720c69b
+PODFILE CHECKSUM: 03c28d4d22ecf1de5e415b84c82ae79c6947321b
 
 COCOAPODS: 1.12.0
