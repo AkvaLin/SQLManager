@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0119C898716D518E3C1C5303 /* Pods_SQLManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1615203026A50F832DE628 /* Pods_SQLManager.framework */; };
+		F6163F5929B337B300A4B07A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6163F5829B337B300A4B07A /* Extensions.swift */; };
+		F6163F5B29B3427800A4B07A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6163F5A29B3427800A4B07A /* TabBarController.swift */; };
 		F67D7C1029AFD34500747976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C0F29AFD34500747976 /* AppDelegate.swift */; };
 		F67D7C1229AFD34500747976 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C1129AFD34500747976 /* SceneDelegate.swift */; };
 		F67D7C1429AFD34500747976 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C1329AFD34500747976 /* MainViewController.swift */; };
@@ -15,6 +17,7 @@
 		F67D7C1C29AFD34800747976 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F67D7C1A29AFD34800747976 /* LaunchScreen.storyboard */; };
 		F6B5E2A329B0D44300CB7D18 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5E2A229B0D44300CB7D18 /* ViewModel.swift */; };
 		F6B5E2A529B0D9D600CB7D18 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5E2A429B0D9D600CB7D18 /* Constants.swift */; };
+		F6B5E2A729B23DFC00CB7D18 /* SpreadsheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5E2A629B23DFC00CB7D18 /* SpreadsheetCell.swift */; };
 		F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +25,8 @@
 		27B2B85CE345FF03929D3037 /* Pods-SQLManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLManager.release.xcconfig"; path = "Target Support Files/Pods-SQLManager/Pods-SQLManager.release.xcconfig"; sourceTree = "<group>"; };
 		57813C0EB07F8A69184EBCEC /* Pods-SQLManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQLManager.debug.xcconfig"; path = "Target Support Files/Pods-SQLManager/Pods-SQLManager.debug.xcconfig"; sourceTree = "<group>"; };
 		8A1615203026A50F832DE628 /* Pods_SQLManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SQLManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6163F5829B337B300A4B07A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F6163F5A29B3427800A4B07A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F67D7C0C29AFD34500747976 /* SQLManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F67D7C0F29AFD34500747976 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F67D7C1129AFD34500747976 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,6 +36,7 @@
 		F67D7C1D29AFD34800747976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6B5E2A229B0D44300CB7D18 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F6B5E2A429B0D9D600CB7D18 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F6B5E2A629B23DFC00CB7D18 /* SpreadsheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreadsheetCell.swift; sourceTree = "<group>"; };
 		F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +69,34 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F6163F5C29B344A600A4B07A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				F67D7C0F29AFD34500747976 /* AppDelegate.swift */,
+				F67D7C1129AFD34500747976 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		F6163F5D29B344B500A4B07A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F67D7C1329AFD34500747976 /* MainViewController.swift */,
+				F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F6163F5E29B344DB00A4B07A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F67D7C1829AFD34800747976 /* Assets.xcassets */,
+				F6B5E2A429B0D9D600CB7D18 /* Constants.swift */,
+				F6163F5829B337B300A4B07A /* Extensions.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		F67D7C0329AFD34500747976 = {
 			isa = PBXGroup;
 			children = (
@@ -84,13 +118,12 @@
 		F67D7C0E29AFD34500747976 /* SQLManager */ = {
 			isa = PBXGroup;
 			children = (
-				F67D7C0F29AFD34500747976 /* AppDelegate.swift */,
-				F67D7C1129AFD34500747976 /* SceneDelegate.swift */,
-				F67D7C1329AFD34500747976 /* MainViewController.swift */,
-				F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */,
+				F6163F5C29B344A600A4B07A /* Application */,
+				F6163F5D29B344B500A4B07A /* View */,
+				F6163F5E29B344DB00A4B07A /* Resources */,
+				F6163F5A29B3427800A4B07A /* TabBarController.swift */,
 				F6B5E2A229B0D44300CB7D18 /* ViewModel.swift */,
-				F6B5E2A429B0D9D600CB7D18 /* Constants.swift */,
-				F67D7C1829AFD34800747976 /* Assets.xcassets */,
+				F6B5E2A629B23DFC00CB7D18 /* SpreadsheetCell.swift */,
 				F67D7C1A29AFD34800747976 /* LaunchScreen.storyboard */,
 				F67D7C1D29AFD34800747976 /* Info.plist */,
 			);
@@ -213,6 +246,9 @@
 			files = (
 				F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */,
 				F67D7C1429AFD34500747976 /* MainViewController.swift in Sources */,
+				F6B5E2A729B23DFC00CB7D18 /* SpreadsheetCell.swift in Sources */,
+				F6163F5B29B3427800A4B07A /* TabBarController.swift in Sources */,
+				F6163F5929B337B300A4B07A /* Extensions.swift in Sources */,
 				F67D7C1029AFD34500747976 /* AppDelegate.swift in Sources */,
 				F67D7C1229AFD34500747976 /* SceneDelegate.swift in Sources */,
 				F6B5E2A329B0D44300CB7D18 /* ViewModel.swift in Sources */,

@@ -11,3 +11,10 @@ enum ConnectionErrors: Error {
     case emptyFields
     case connectionDenied
 }
+
+enum SQLRequests: String {
+    case fetchAllData = """
+                        SELECT TOP 10000 *
+                        FROM Person.Person
+                        """
+}

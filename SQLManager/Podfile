@@ -9,5 +9,6 @@ target 'SQLManager' do
   pod 'SQLClient', '~> 1.0.0'
   pod 'SwiftyButton'
   pod 'SnapKit'
+  pod 'SpreadsheetView'
   
 end

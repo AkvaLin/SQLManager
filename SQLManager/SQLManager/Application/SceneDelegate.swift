@@ -19,8 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let vc = ConnectionViewController()
-        window?.rootViewController = vc
+        if UserDefaults.standard.hostname != nil,
+           UserDefaults.standard.username != nil,
+            UserDefaults.standard.password != nil,
+            UserDefaults.standard.database != nil
+        {
+            let vc = TabBarController()
+            window?.rootViewController = vc
+        } else {
+            let vc = ConnectionViewController()
+            window?.rootViewController = vc
+        }
         
         window?.makeKeyAndVisible()
     }
