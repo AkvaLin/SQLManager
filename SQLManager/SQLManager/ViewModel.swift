@@ -14,8 +14,8 @@ class ViewModel {
     
     typealias ThrowsCallback = () throws -> (Bool)
     
-    public var tableData = [[String]]()
-    public var tableHeaders = [String]()
+    public var tableData: Observable<[[String]]> = Observable([[String]]())
+    public var tableHeaders: Observable<[String]> = Observable([String]())
     
     func connect(_ host: String?, username: String?, password: String?, database: String?, callback: @escaping (ThrowsCallback) -> Void) {
         
@@ -70,9 +70,9 @@ class ViewModel {
                 guard let keys = (data[0] as? NSDictionary)?.allKeys else { return }
                 guard let stringKeys = keys as? [String] else { return }
                 // dict keys -- sql table headers
-                self.tableHeaders = stringKeys
+                self.tableHeaders.value = stringKeys
                 // transform all data to string and store it
-                self.tableData = data
+                self.tableData.value = data
                     .compactMap { $0 as? NSDictionary }
                     .compactMap { $0.allValues }
                     .compactMap { $0.compactMap { "\($0)" } }

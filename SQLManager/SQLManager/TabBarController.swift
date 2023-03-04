@@ -31,11 +31,13 @@ class TabBarController: UITabBarController {
         view.backgroundColor = .systemBackground
         
         connect()
+        setupViewControllers()
     }
     
     private func setupViewControllers() {
         viewControllers = [
-            createNavController(for: MainViewController(viewModel: viewModel), image: UIImage())
+            createNavController(for: MainViewController(viewModel: viewModel), image: UIImage(systemName: "tablecells") ?? UIImage()),
+            createNavController(for: AddRowViewController(viewModel: viewModel), image: UIImage(systemName: "plus.circle") ?? UIImage())
         ]
     }
     

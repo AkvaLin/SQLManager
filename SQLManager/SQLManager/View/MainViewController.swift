@@ -33,11 +33,12 @@ class MainViewController: UIViewController {
         sheet.dataSource = self
         sheet.register(SpreadsheetCell.self, forCellWithReuseIdentifier: SpreadsheetCell.identifier)
         view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(updateData))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) {
-            self.sheet.reloadData()
-            self.sheet.layoutIfNeeded()
-        }
+        bind()
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,24 +47,35 @@ class MainViewController: UIViewController {
         setupConstraints()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         view.addSubview(sheet)
         
         sheet.translatesAutoresizingMaskIntoConstraints = false
         
         sheet.snp.makeConstraints { make in
-            make.edges.equalTo(view).inset(UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50))
+            make.edges.equalTo(view).inset(UIEdgeInsets(top: 40, left: 0, bottom: 50, right: 0))
         }
+    }
+    
+    private func bind() {
+        viewModel.tableData.bind { [weak self] _ in
+            self?.sheet.reloadData()
+            self?.sheet.layoutIfNeeded()
+        }
+    }
+    
+    @objc func updateData() {
+        viewModel.fetchTableData()
     }
 }
 
 extension MainViewController: SpreadsheetViewDataSource {
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return viewModel.tableData.count + 1
+        return (viewModel.tableData.value?.count ?? -1) + 1
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return viewModel.tableHeaders.count
+        return viewModel.tableHeaders.value?.count ?? 0
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
@@ -78,16 +90,16 @@ extension MainViewController: SpreadsheetViewDataSource {
         let cell = sheet.dequeueReusableCell(withReuseIdentifier: SpreadsheetCell.identifier, for: indexPath) as! SpreadsheetCell
 
         if indexPath.row == 0 {
-            cell.setup(with: viewModel.tableHeaders[indexPath.column])
+            cell.setup(with: viewModel.tableHeaders.value?[indexPath.column] ?? "")
         } else {
-            cell.setup(with: viewModel.tableData[indexPath.row - 1][indexPath.column])
+            cell.setup(with: viewModel.tableData.value?[indexPath.row - 1][indexPath.column] ?? "")
         }
 
         return cell
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
-        if viewModel.tableData.count > 0 {
+        if viewModel.tableData.value?.count ?? -1 > 0 {
             return 1
         } else {
             return 0

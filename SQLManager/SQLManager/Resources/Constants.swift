@@ -14,7 +14,7 @@ enum ConnectionErrors: Error {
 
 enum SQLRequests: String {
     case fetchAllData = """
-                        SELECT TOP 10000 *
+                        SELECT TOP 25 *
                         FROM Person.Person
                         """
 }
