@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     
     private let sheet: SpreadsheetView = {
         let view = SpreadsheetView()
-        
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sheet.dataSource = self
-        sheet.register(SpreadsheetCell.self, forCellWithReuseIdentifier: SpreadsheetCell.identifier)
+        sheet.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.identifier)
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
                                                             style: .plain,
@@ -87,7 +87,7 @@ extension MainViewController: SpreadsheetViewDataSource {
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        let cell = sheet.dequeueReusableCell(withReuseIdentifier: SpreadsheetCell.identifier, for: indexPath) as! SpreadsheetCell
+        let cell = sheet.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell
 
         if indexPath.row == 0 {
             cell.setup(with: viewModel.tableHeaders.value?[indexPath.column] ?? "")

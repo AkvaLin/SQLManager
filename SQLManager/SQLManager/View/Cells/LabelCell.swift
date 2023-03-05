@@ -9,11 +9,16 @@ import Foundation
 import SpreadsheetView
 import UIKit
 
-class SpreadsheetCell: Cell {
+class LabelCell: Cell {
     
-    static let identifier = "SpreadsheetCellID"
+    static let identifier = "LabelCellID"
     
     private let label = UILabel()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        label.frame = contentView.bounds
+    }
     
     public func setup(with text: String) {
         label.text = text
@@ -21,8 +26,7 @@ class SpreadsheetCell: Cell {
         contentView.addSubview(label)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.frame = contentView.bounds
+    public func getText() -> String? {
+        return label.text
     }
 }
