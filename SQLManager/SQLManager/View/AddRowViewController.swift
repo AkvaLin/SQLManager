@@ -11,13 +11,24 @@ import SpreadsheetView
 
 class AddRowViewController: UIViewController {
     
-    private let tableSheetView: SpreadsheetView = {
+    internal let tableSheetView: SpreadsheetView = {
         let view = SpreadsheetView()
         view.backgroundColor = .systemBackground
         return view
     }()
     
-    private let viewModel: ViewModel
+    private let networkView: UILabel = {
+        let view = UILabel()
+        view.backgroundColor = .systemGreen
+        view.text = "Запрос успешно отправлен"
+        view.numberOfLines = 0
+        view.textColor = .white
+        view.textAlignment = .center
+        view.alpha = 0
+        return view
+    }()
+    
+    internal let viewModel: ViewModel
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -36,12 +47,14 @@ class AddRowViewController: UIViewController {
         tableSheetView.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.identifier)
         tableSheetView.register(TextFieldCell.self, forCellWithReuseIdentifier: TextFieldCell.identifier)
         
-        viewModel.getColumnTypes(tableName: "Person", tableSchema: "Person")
+        viewModel.getColumnTypes(tableName: "product", tableSchema: "dbo")
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"),
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(sendData))
+        
+        navigationItem.title = "Добавление"
         
         setupConstraints()
         bind()
@@ -49,8 +62,15 @@ class AddRowViewController: UIViewController {
     
     private func setupConstraints() {
         view.addSubview(tableSheetView)
+        view.addSubview(networkView)
         
         tableSheetView.frame = view.bounds
+        
+        networkView.translatesAutoresizingMaskIntoConstraints = false
+        networkView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        networkView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        networkView.topAnchor.constraint(equalTo: view.topAnchor, constant: 700).isActive = true
+        networkView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
     }
     
     private func bind() {
@@ -76,7 +96,24 @@ class AddRowViewController: UIViewController {
         }
 
         do {
-            try viewModel.sendData(tableName: "Person", tableSchema: "Person", namesWithValues: namesWithValues)
+            try viewModel.sendData(tableName: "product", tableSchema: "dbo", namesWithValues: namesWithValues) { [weak self] completion in
+                if completion {
+                    self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
+                    for rowIndex in 0..<(self?.tableSheetView.numberOfRows ?? 0) {
+                        DispatchQueue.main.async {
+                            (self?.tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.clear()
+                            UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1, options: .curveEaseInOut) {
+                                self?.networkView.alpha = 1
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+                                UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1, options: .curveEaseInOut) {
+                                    self?.networkView.alpha = 0
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         } catch {
             guard let error = error as? AddNewValuesErrors else {
                 let alert = UIAlertController(title: "Неизвестная ошибка",

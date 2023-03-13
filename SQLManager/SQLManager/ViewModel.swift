@@ -61,7 +61,7 @@ class ViewModel {
         }
     }
     
-    func fetchTableData(tableName: String = "Person", tableSchema: String = "Person") {
+    func fetchTableData(tableName: String = "product", tableSchema: String = "dbo") {
         guard sqlClient.isConnected() else { return }
         
         DispatchQueue.global(qos: .userInteractive).async {
@@ -81,7 +81,78 @@ class ViewModel {
             }
         }
     }
+    
+    private func changeDBName(from request: String, with tableName: String, and schemaName: String) -> String {
+        var replacedString = request
+        replacedString = replacedString.replacingOccurrences(of: "tableNameWithSchema", with: "\(schemaName).\(tableName)")
+        replacedString = replacedString.replacingOccurrences(of: "tableNameToChange", with: tableName)
+        replacedString = replacedString.replacingOccurrences(of: "tableSchemaToChange", with: schemaName)
+        return replacedString
+    }
+    
+    public func sendData(tableName: String, tableSchema: String, namesWithValues: [String: InsertModel], completion: @escaping (Bool) -> Void) throws {
+        let notNullable = getNotNullableColumns()
+        var emptyFields = [String]()
+        notNullable.forEach { name in
+            guard let fieldValue = namesWithValues[name] else {
+                emptyFields.append(name)
+                return
+            }
+            guard let value = fieldValue.value else {
+                emptyFields.append(name)
+                return
+            }
+            if value.isEmpty {
+                emptyFields.append(name)
+            }
+        }
+        guard emptyFields.isEmpty else {
+            completion(false)
+            throw AddNewValuesErrors.emptyFields(emptyFields.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: ""))
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let names = namesWithValues.values.map { $0.name }
+            let values = namesWithValues.values.map { $0.value }
+            let namesString = names.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "\"", with: "")
+            let valuesString = values.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "\"", with: "\'").replacingOccurrences(of: "Optional(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "nil", with: "NULL")
+            self.sqlClient.execute("INSERT INTO \(tableSchema).\(tableName) (\(namesString)) VALUES (\(valuesString))")
+            completion(true)
+        }
+    }
+    
+    public func deleteRow(dictColumnNamesColumnValues: [String: String], tableName: String, tableSchema: String, completion: @escaping(Bool) -> Void) {
+        
+        var dict = dictColumnNamesColumnValues
+        
+        dictColumnNamesColumnValues.forEach { (key, value) in
+            if value.contains("xml") {
+                dict.removeValue(forKey: key)
+            } else if value == "<null>" {
+                dict.removeValue(forKey: key)
+            }
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            var request = "DELETE FROM \(tableSchema).\(tableName) WHERE "
+            dict.forEach { (key, value) in
+                request += "\(key) = \'\(value)\' and "
+            }
+            if request.last == " " {
+                for _ in 0...3 {
+                    request.removeLast()
+                }
+            }
+            self.sqlClient.execute(request)
+            completion(true)
+        }
+    }
+    
+}
 
+// MARK: - Get Methods
+extension ViewModel {
+    
     public func getColumnTypes(tableName: String, tableSchema: String) {
         guard sqlClient.isConnected() else { return }
         
@@ -144,41 +215,6 @@ class ViewModel {
                 }
                 clouser(escapingValue)
             }
-        }
-    }
-    
-    private func changeDBName(from request: String, with tableName: String, and schemaName: String) -> String {
-        var replacedString = request
-        replacedString = replacedString.replacingOccurrences(of: "tableNameWithSchema", with: "\(schemaName).\(tableName)")
-        replacedString = replacedString.replacingOccurrences(of: "tableNameToChange", with: tableName)
-        replacedString = replacedString.replacingOccurrences(of: "tableSchemaToChange", with: schemaName)
-        return replacedString
-    }
-    
-    public func sendData(tableName: String, tableSchema: String, namesWithValues: [String: InsertModel]) throws {
-        let notNullable = getNotNullableColumns()
-        var emptyFields = [String]()
-        notNullable.forEach { name in
-            guard let fieldValue = namesWithValues[name] else {
-                emptyFields.append(name)
-                return
-            }
-            guard let value = fieldValue.value else {
-                emptyFields.append(name)
-                return
-            }
-            if value.isEmpty {
-                emptyFields.append(name)
-            }
-        }
-        guard emptyFields.isEmpty else { throw AddNewValuesErrors.emptyFields(emptyFields.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")) }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            let names = namesWithValues.values.map { $0.name }
-            let values = namesWithValues.values.map { $0.value }
-            let namesString = names.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "\"", with: "")
-            let valuesString = values.description.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "\"", with: "\'").replacingOccurrences(of: "Optional(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: "nil", with: "NULL")
-            self.sqlClient.execute("INSERT INTO \(tableSchema).\(tableName) (\(namesString)) VALUES (\(valuesString))")
         }
     }
     

@@ -29,7 +29,16 @@ class TextFieldCell: Cell {
         contentView.addSubview(textField)
     }
     
+    public func updateText(text: String) {
+        textField.text = text
+        contentView.layoutIfNeeded()
+    }
+    
     public func getText() -> String? {
         return textField.text
+    }
+    
+    public func clear() {
+        textField.text = ""
     }
 }

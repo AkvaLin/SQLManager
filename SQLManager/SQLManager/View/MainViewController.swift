@@ -13,6 +13,8 @@ class MainViewController: UIViewController {
     private let sheet: SpreadsheetView = {
         let view = SpreadsheetView()
         view.backgroundColor = .systemBackground
+        view.allowsSelection = true
+        view.allowsMultipleSelection = false
         return view
     }()
     
@@ -31,6 +33,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sheet.dataSource = self
+        sheet.delegate = self
         sheet.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.identifier)
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
@@ -103,6 +106,24 @@ extension MainViewController: SpreadsheetViewDataSource {
             return 1
         } else {
             return 0
+        }
+    }
+}
+
+extension MainViewController: SpreadsheetViewDelegate {
+    
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.row != 0 {
+            var dataModel = [String: String]()
+            
+            for columnIndex in 0..<spreadsheetView.numberOfColumns {
+                guard let columnName = viewModel.tableHeaders.value?[columnIndex] else { return }
+                dataModel[columnName] = viewModel.tableData.value?[indexPath.row - 1][columnIndex] ?? ""
+            }
+            
+            let vc = EditRowViewController(viewModel: viewModel, dataModel: dataModel)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

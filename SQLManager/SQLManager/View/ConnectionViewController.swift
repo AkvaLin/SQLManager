@@ -167,7 +167,7 @@ class ConnectionViewController: UIViewController {
                     if strongSelf.isBeingPresented {
                         self?.dismiss(animated: true)
                     } else {
-                        let vc = MainViewController(viewModel: viewModel)
+                        let vc = TabBarController(viewModel: viewModel)
                         vc.modalPresentationStyle = .fullScreen
                         vc.modalTransitionStyle = .flipHorizontal
                         self?.present(vc, animated: true)
