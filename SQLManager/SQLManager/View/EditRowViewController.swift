@@ -48,6 +48,24 @@ class EditRowViewController: AddRowViewController {
     
     @objc private func updateRow() {
         
+        var namesWithValues = [String: String]()
+        
+        for rowIndex in 0..<tableSheetView.numberOfRows {
+            guard let name = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 0)) as? LabelCell)?.getText() else { return }
+            var value: String? = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.getText()
+            if value != nil {
+                if value!.isEmpty {
+                    value = nil
+                }
+            }
+            namesWithValues[name] = value
+        }
+        
+        viewModel.updateRow(prevValues: dataModel, newValues: namesWithValues, tableName: "product", tableSchema: "dbo") { [weak self] completion in
+            if completion {
+                self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
+            }
+        }
     }
     
     @objc private func deleteRow() {

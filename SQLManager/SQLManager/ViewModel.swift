@@ -90,7 +90,7 @@ class ViewModel {
         return replacedString
     }
     
-    public func sendData(tableName: String, tableSchema: String, namesWithValues: [String: InsertModel], completion: @escaping (Bool) -> Void) throws {
+    public func addRow(tableName: String, tableSchema: String, namesWithValues: [String: InsertModel], completion: @escaping (Bool) -> Void) throws {
         let notNullable = getNotNullableColumns()
         var emptyFields = [String]()
         notNullable.forEach { name in
@@ -122,27 +122,28 @@ class ViewModel {
     }
     
     public func deleteRow(dictColumnNamesColumnValues: [String: String], tableName: String, tableSchema: String, completion: @escaping(Bool) -> Void) {
-        
-        var dict = dictColumnNamesColumnValues
-        
-        dictColumnNamesColumnValues.forEach { (key, value) in
-            if value.contains("xml") {
-                dict.removeValue(forKey: key)
-            } else if value == "<null>" {
-                dict.removeValue(forKey: key)
-            }
-        }
-        
         DispatchQueue.global(qos: .userInitiated).async {
             var request = "DELETE FROM \(tableSchema).\(tableName) WHERE "
-            dict.forEach { (key, value) in
-                request += "\(key) = \'\(value)\' and "
-            }
-            if request.last == " " {
-                for _ in 0...3 {
-                    request.removeLast()
+            request += self.getWhereStatement(keyValue: dictColumnNamesColumnValues)
+            self.sqlClient.execute(request)
+            completion(true)
+        }
+    }
+    
+    public func updateRow(prevValues: [String: String], newValues: [String: String], tableName: String, tableSchema: String, completion: @escaping(Bool) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            var request = "UPDATE \(tableSchema).\(tableName) SET "
+            guard let identityColumns = self.notIdentityColumnsWithDataType.value else { return }
+            newValues.forEach { (key: String, value: String) in
+                if identityColumns.contains(where: { model in
+                    model.name == key
+                }) {
+                    request += "\(key) = \'\(value)\', "
                 }
             }
+            request.removeLast(2)
+            request += " WHERE "
+            request += self.getWhereStatement(keyValue: prevValues)
             self.sqlClient.execute(request)
             completion(true)
         }
@@ -226,5 +227,30 @@ extension ViewModel {
             }
         })
         return namesOfNotNullableColumns
+    }
+    
+    private func getWhereStatement(keyValue: [String: String]) -> String {
+        var dict = keyValue
+        
+        var request = ""
+        
+        keyValue.forEach { (key, value) in
+            if value.contains("xml") {
+                dict.removeValue(forKey: key)
+            } else if value == "<null>" {
+                dict.removeValue(forKey: key)
+            }
+        }
+        
+        dict.forEach { (key, value) in
+            request += "\(key) = \'\(value)\' and "
+        }
+        if request.last == " " {
+            for _ in 0...3 {
+                request.removeLast()
+            }
+        }
+        
+        return request
     }
 }

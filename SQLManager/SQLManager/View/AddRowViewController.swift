@@ -52,7 +52,7 @@ class AddRowViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"),
                                                             style: .plain,
                                                             target: self,
-                                                            action: #selector(sendData))
+                                                            action: #selector(addRow))
         
         navigationItem.title = "Добавление"
         
@@ -80,7 +80,7 @@ class AddRowViewController: UIViewController {
         }
     }
     
-    @objc private func sendData() {
+    @objc private func addRow() {
         
         var namesWithValues = [String: InsertModel]()
         
@@ -96,7 +96,7 @@ class AddRowViewController: UIViewController {
         }
 
         do {
-            try viewModel.sendData(tableName: "product", tableSchema: "dbo", namesWithValues: namesWithValues) { [weak self] completion in
+            try viewModel.addRow(tableName: "product", tableSchema: "dbo", namesWithValues: namesWithValues) { [weak self] completion in
                 if completion {
                     self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
                     for rowIndex in 0..<(self?.tableSheetView.numberOfRows ?? 0) {
