@@ -2,12 +2,14 @@ PODS:
   - SnapKit (5.6.0)
   - SpreadsheetView (0.9.1)
   - SQLClient (1.0.0)
+  - SwiftAlgorithms (1.0.0)
   - SwiftyButton (0.8.2)
 
 DEPENDENCIES:
   - SnapKit
   - SpreadsheetView
   - SQLClient (~> 1.0.0)
+  - SwiftAlgorithms
   - SwiftyButton
 
 SPEC REPOS:
@@ -15,14 +17,16 @@ SPEC REPOS:
     - SnapKit
     - SpreadsheetView
     - SQLClient
+    - SwiftAlgorithms
     - SwiftyButton
 
 SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SpreadsheetView: 688dbd19f2b355df0eb09e486266fd913a013449
   SQLClient: 262f95dad0467f173bbca5a7cb4fdcaa6c08affd
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftyButton: 5b0ef314e9cf61cf8a83e456ddd1ea1f53f30598
 
-PODFILE CHECKSUM: 3fcf14c93b24bd09c2aa08e9b37ecbeb8ad11385
+PODFILE CHECKSUM: c7729e778faec1df157207bad114100bbc6af0cf
 
 COCOAPODS: 1.12.0

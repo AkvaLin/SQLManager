@@ -7,6 +7,7 @@
 
 import Foundation
 import SQLClient
+import PDFKit
 
 class ViewModel {
     
@@ -149,6 +150,42 @@ class ViewModel {
         }
     }
     
+    public func createPDF() -> Data {
+        guard let data = tableData.value else { return createFlyer() }
+        guard let headers = tableHeaders.value else { return createFlyer() }
+        let pdfCreator = PDFCreator(tableDataItems: data, tableDataHeaderTitles: headers)
+        return pdfCreator.create()
+    }
+    
+    private func createFlyer() -> Data {
+        
+        let pdfMetaData = [
+            kCGPDFContextCreator: "SQLManager",
+            kCGPDFContextAuthor: "user"
+        ]
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = pdfMetaData as [String: Any]
+        
+        let pageWidth = 8.5 * 72.0
+        let pageHeight = 11 * 72.0
+        let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+        
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+        
+        let data = renderer.pdfData { (context) in
+            
+            context.beginPage()
+            
+            let attributes = [
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 72)
+            ]
+            let text = "I'm a PDF!"
+            text.draw(at: CGPoint(x: 0, y: 0), withAttributes: attributes)
+        }
+        
+        return data
+    }
+
 }
 
 // MARK: - Get Methods

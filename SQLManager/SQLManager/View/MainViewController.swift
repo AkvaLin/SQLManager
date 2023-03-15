@@ -36,10 +36,17 @@ class MainViewController: UIViewController {
         sheet.delegate = self
         sheet.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.identifier)
         view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(updateData))
+
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
+                                                                style: .plain,
+                                                                target: self,
+                                                                action: #selector(updateData)),
+            UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(presentPDFView))
+        ]
         
         bind()
     }
@@ -69,6 +76,12 @@ class MainViewController: UIViewController {
     
     @objc func updateData() {
         viewModel.fetchTableData()
+    }
+    
+    @objc func presentPDFView() {
+        let pdfData = viewModel.createPDF()
+        let vc = PDFPreviewViewController(pdfData: pdfData)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

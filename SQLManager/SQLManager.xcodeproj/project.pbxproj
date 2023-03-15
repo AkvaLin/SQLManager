@@ -16,6 +16,8 @@
 		F640965C29B4D19200C45706 /* ColumnDataTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F640965B29B4D19200C45706 /* ColumnDataTypeModel.swift */; };
 		F640965E29B525E500C45706 /* NewRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F640965D29B525E500C45706 /* NewRowModel.swift */; };
 		F640966229B53CD800C45706 /* InsertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F640966129B53CD800C45706 /* InsertModel.swift */; };
+		F666061329C1AD9900554652 /* PDFPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666061229C1AD9900554652 /* PDFPreviewViewController.swift */; };
+		F666061529C1B64000554652 /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666061429C1B64000554652 /* PDFCreator.swift */; };
 		F67D7C1029AFD34500747976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C0F29AFD34500747976 /* AppDelegate.swift */; };
 		F67D7C1229AFD34500747976 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C1129AFD34500747976 /* SceneDelegate.swift */; };
 		F67D7C1429AFD34500747976 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67D7C1329AFD34500747976 /* MainViewController.swift */; };
@@ -40,6 +42,8 @@
 		F640965B29B4D19200C45706 /* ColumnDataTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnDataTypeModel.swift; sourceTree = "<group>"; };
 		F640965D29B525E500C45706 /* NewRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRowModel.swift; sourceTree = "<group>"; };
 		F640966129B53CD800C45706 /* InsertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertModel.swift; sourceTree = "<group>"; };
+		F666061229C1AD9900554652 /* PDFPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFPreviewViewController.swift; sourceTree = "<group>"; };
+		F666061429C1B64000554652 /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		F67D7C0C29AFD34500747976 /* SQLManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F67D7C0F29AFD34500747976 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F67D7C1129AFD34500747976 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 				F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */,
 				F6163F5F29B34F9A00A4B07A /* AddRowViewController.swift */,
 				F6BE760829B607080083DD33 /* EditRowViewController.swift */,
+				F666061229C1AD9900554652 /* PDFPreviewViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -111,6 +116,7 @@
 				F6B5E2A429B0D9D600CB7D18 /* Constants.swift */,
 				F6163F5829B337B300A4B07A /* Extensions.swift */,
 				F6163F6129B352F300A4B07A /* Observable<T>.swift */,
+				F666061429C1B64000554652 /* PDFCreator.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 			files = (
 				F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */,
 				F640966229B53CD800C45706 /* InsertModel.swift in Sources */,
+				F666061329C1AD9900554652 /* PDFPreviewViewController.swift in Sources */,
 				F6163F6229B352F300A4B07A /* Observable<T>.swift in Sources */,
 				F6BE760929B607080083DD33 /* EditRowViewController.swift in Sources */,
 				F67D7C1429AFD34500747976 /* MainViewController.swift in Sources */,
@@ -297,6 +304,7 @@
 				F6163F6029B34F9A00A4B07A /* AddRowViewController.swift in Sources */,
 				F6B5E2A329B0D44300CB7D18 /* ViewModel.swift in Sources */,
 				F6B5E2A529B0D9D600CB7D18 /* Constants.swift in Sources */,
+				F666061529C1B64000554652 /* PDFCreator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

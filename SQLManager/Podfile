@@ -10,5 +10,6 @@ target 'SQLManager' do
   pod 'SwiftyButton'
   pod 'SnapKit'
   pod 'SpreadsheetView'
+  pod 'SwiftAlgorithms'
   
 end
