@@ -24,8 +24,9 @@ class TextFieldCell: Cell {
         textField.frame = contentView.bounds
     }
     
-    public func setup() {
+    public func setup(delegate: UITextFieldDelegate) {
         textField.placeholder = "Введите значение"
+        textField.delegate = delegate
         contentView.addSubview(textField)
     }
     

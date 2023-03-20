@@ -39,9 +39,19 @@ class EditRowViewController: AddRowViewController {
     
     private func setupTextFields() {
         for rowIndex in 0..<tableSheetView.numberOfRows {
-            guard let textFieldCell = tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell else { return }
+            guard let dataTypeCell = tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 2)) as? LabelCell else { return }
             guard let name = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 0)) as? LabelCell)?.getText() else { return }
-            textFieldCell.updateText(text: dataModel[name] ?? "")
+            switch dataTypeCell.getText() {
+            case "text":
+                guard let cell = tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? ImagePickerCell else { return }
+                cell.setup(columName: name, dataModel: dataModel, viewModel: viewModel)
+            case "date":
+                guard let cell = tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? DatePickerCell else { return }
+                cell.setup(date: dataModel[name] ?? "")
+            default:
+                guard let textFieldCell = tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell else { return }
+                textFieldCell.updateText(text: dataModel[name] ?? "")
+            }
         }
         self.tableSheetView.layoutIfNeeded()
     }
@@ -52,7 +62,16 @@ class EditRowViewController: AddRowViewController {
         
         for rowIndex in 0..<tableSheetView.numberOfRows {
             guard let name = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 0)) as? LabelCell)?.getText() else { return }
-            var value: String? = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.getText()
+            guard let dataType = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 2)) as? LabelCell)?.getText() else { return }
+            var value: String? = nil
+            switch dataType {
+            case "text":
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? ImagePickerCell)?.getImageData()
+            case "date":
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? DatePickerCell)?.getStringDate()
+            default:
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.getText()
+            }
             if value != nil {
                 if value!.isEmpty {
                     value = nil

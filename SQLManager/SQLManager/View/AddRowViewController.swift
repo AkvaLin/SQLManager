@@ -46,6 +46,8 @@ class AddRowViewController: UIViewController {
         tableSheetView.dataSource = self
         tableSheetView.register(LabelCell.self, forCellWithReuseIdentifier: LabelCell.identifier)
         tableSheetView.register(TextFieldCell.self, forCellWithReuseIdentifier: TextFieldCell.identifier)
+        tableSheetView.register(DatePickerCell.self, forCellWithReuseIdentifier: DatePickerCell.identifier)
+        tableSheetView.register(ImagePickerCell.self, forCellWithReuseIdentifier: ImagePickerCell.identifier)
         
         viewModel.getColumnTypes(tableName: "product", tableSchema: "dbo")
         
@@ -58,6 +60,7 @@ class AddRowViewController: UIViewController {
         
         setupConstraints()
         bind()
+        setupKeyboardHidding()
     }
     
     private func setupConstraints() {
@@ -86,7 +89,16 @@ class AddRowViewController: UIViewController {
         
         for rowIndex in 0..<tableSheetView.numberOfRows {
             guard let name = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 0)) as? LabelCell)?.getText() else { return }
-            var value: String? = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.getText()
+            guard let dataType = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 2)) as? LabelCell)?.getText() else { return }
+            var value: String? = nil
+            switch dataType {
+            case "text":
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? ImagePickerCell)?.getImageData()
+            case "date":
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? DatePickerCell)?.getStringDate()
+            default:
+                value = (tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.getText()
+            }
             if value != nil {
                 if value!.isEmpty {
                     value = nil
@@ -166,13 +178,34 @@ extension AddRowViewController: SpreadsheetViewDataSource {
             cell.setup(with: viewModel.notIdentityColumnsWithDataType.value?[indexPath.row].name ?? "")
             return cell
         } else if indexPath.column == 1 {
-            let cell = tableSheetView.dequeueReusableCell(withReuseIdentifier: TextFieldCell.identifier, for: indexPath) as! TextFieldCell
-            cell.setup()
-            return cell
+            guard let type = viewModel.notIdentityColumnsWithDataType.value?[indexPath.row].dataType else { return tableSheetView.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell}
+            if type == "date" {
+                let cell = tableSheetView.dequeueReusableCell(withReuseIdentifier: DatePickerCell.identifier, for: indexPath) as! DatePickerCell
+                return cell
+            } else if type == "text" {
+                let cell = tableSheetView.dequeueReusableCell(withReuseIdentifier: ImagePickerCell.identifier, for: indexPath) as! ImagePickerCell
+                return cell
+            } else {
+                let cell = tableSheetView.dequeueReusableCell(withReuseIdentifier: TextFieldCell.identifier, for: indexPath) as! TextFieldCell
+                cell.setup(delegate: self)
+                return cell
+            }
         } else {
             let cell = tableSheetView.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell
             cell.setup(with: viewModel.notIdentityColumnsWithDataType.value?[indexPath.row].dataType ?? "")
             return cell
         }
+    }
+}
+
+extension AddRowViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
     }
 }

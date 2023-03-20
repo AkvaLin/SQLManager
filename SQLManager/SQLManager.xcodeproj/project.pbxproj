@@ -28,6 +28,9 @@
 		F6B5E2A729B23DFC00CB7D18 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B5E2A629B23DFC00CB7D18 /* LabelCell.swift */; };
 		F6BE760929B607080083DD33 /* EditRowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BE760829B607080083DD33 /* EditRowViewController.swift */; };
 		F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */; };
+		F6C6537529C4903300CAEC87 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C6537429C4903300CAEC87 /* ImagePickerCell.swift */; };
+		F6C6537729C4917D00CAEC87 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */; };
+		F6F06E5B29C2F340003F0BFA /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		F6B5E2A629B23DFC00CB7D18 /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		F6BE760829B607080083DD33 /* EditRowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRowViewController.swift; sourceTree = "<group>"; };
 		F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
+		F6C6537429C4903300CAEC87 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
+		F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 				F6163F5F29B34F9A00A4B07A /* AddRowViewController.swift */,
 				F6BE760829B607080083DD33 /* EditRowViewController.swift */,
 				F666061229C1AD9900554652 /* PDFPreviewViewController.swift */,
+				F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -169,6 +176,8 @@
 			children = (
 				F6B5E2A629B23DFC00CB7D18 /* LabelCell.swift */,
 				F6163F6529B35BD000A4B07A /* TextFieldCell.swift */,
+				F6C6537429C4903300CAEC87 /* ImagePickerCell.swift */,
+				F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -289,6 +298,8 @@
 			files = (
 				F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */,
 				F640966229B53CD800C45706 /* InsertModel.swift in Sources */,
+				F6F06E5B29C2F340003F0BFA /* ImageViewController.swift in Sources */,
+				F6C6537729C4917D00CAEC87 /* DatePickerCell.swift in Sources */,
 				F666061329C1AD9900554652 /* PDFPreviewViewController.swift in Sources */,
 				F6163F6229B352F300A4B07A /* Observable<T>.swift in Sources */,
 				F6BE760929B607080083DD33 /* EditRowViewController.swift in Sources */,
@@ -303,6 +314,7 @@
 				F67D7C1229AFD34500747976 /* SceneDelegate.swift in Sources */,
 				F6163F6029B34F9A00A4B07A /* AddRowViewController.swift in Sources */,
 				F6B5E2A329B0D44300CB7D18 /* ViewModel.swift in Sources */,
+				F6C6537529C4903300CAEC87 /* ImagePickerCell.swift in Sources */,
 				F6B5E2A529B0D9D600CB7D18 /* Constants.swift in Sources */,
 				F666061529C1B64000554652 /* PDFCreator.swift in Sources */,
 			);

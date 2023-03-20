@@ -20,6 +20,7 @@ class ViewModel {
     public var notIdentityColumnsWithDataType: Observable<[ColumnDataTypeModel]> = Observable([ColumnDataTypeModel]())
     
     func connect(_ host: String?, username: String?, password: String?, database: String?, callback: @escaping (ThrowsCallback) -> Void) {
+        sqlClient.maxTextSize = 2147483647
         
         guard !sqlClient.isConnected() else {
             callback( { return sqlClient.isConnected() })
@@ -150,6 +151,20 @@ class ViewModel {
         }
     }
     
+    public func getImage(tableName: String, tableSchema: String, columnName: String, dataModel: [String: String], completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            var request = "SET TEXTSIZE 2147483647 SELECT \(columnName) FROM \(tableSchema).\(tableName) WHERE "
+            request += self.getWhereStatement(keyValue: dataModel)
+            self.sqlClient.execute(request) { data in
+                guard let data = data?.first as? NSArray else { completion(nil); return }
+                guard let hexImageString = (data.firstObject as? NSDictionary)?.allValues.first as? String else { completion(nil); return }
+                guard let imageData = Data(base64Encoded: hexImageString, options: .ignoreUnknownCharacters) else { completion(nil); return }
+                guard let image = UIImage(data: imageData) else { completion(nil); return }
+                completion(image)
+            }
+        }
+    }
+    
     public func createPDF() -> Data {
         guard let data = tableData.value else { return createFlyer() }
         guard let headers = tableHeaders.value else { return createFlyer() }
@@ -185,7 +200,6 @@ class ViewModel {
         
         return data
     }
-
 }
 
 // MARK: - Get Methods
@@ -276,6 +290,13 @@ extension ViewModel {
                 dict.removeValue(forKey: key)
             } else if value == "<null>" {
                 dict.removeValue(forKey: key)
+            }
+        }
+        
+        guard let values = notIdentityColumnsWithDataType.value else { return "" }
+        values.forEach { model in
+            if model.dataType == "text" {
+                dict.removeValue(forKey: model.name)
             }
         }
         

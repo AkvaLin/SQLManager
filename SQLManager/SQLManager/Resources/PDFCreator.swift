@@ -61,10 +61,10 @@ extension PDFCreator {
         drawContext.addLine(to: CGPoint(x: pageRect.width - defaultOffset, y: defaultOffset * 3))
         drawContext.strokePath()
         
-        // Draw header's 3 vertical lines
+        // Draw header's vertical lines
         drawContext.setLineWidth(2.0)
         drawContext.saveGState()
-        let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(3)
+        let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(tableDataHeaderTitles.count)
         for verticalLineIndex in 0...tableDataHeaderTitles.count {
             let tabX = CGFloat(verticalLineIndex) * tabWidth
             drawContext.move(to: CGPoint(x: tabX + defaultOffset, y: defaultOffset))
@@ -87,7 +87,7 @@ extension PDFCreator {
         ]
         
         // draw titles
-        let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(3)
+        let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(tableDataHeaderTitles.count)
         for titleIndex in 0..<tableDataHeaderTitles.count {
             let attributedTitle = NSAttributedString(string: tableDataHeaderTitles[titleIndex].capitalized, attributes: titleAttributes)
             let tabX = CGFloat(titleIndex) * tabWidth
@@ -121,7 +121,7 @@ extension PDFCreator {
                     NSAttributedString.Key.paragraphStyle: paragraphStyle,
                     NSAttributedString.Key.font: textFont
                 ]
-                let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(3)
+                let tabWidth = (pageRect.width - defaultOffset * 2) / CGFloat(tableDataHeaderTitles.count)
                 
                 for titleIndex in 0..<tableDataHeaderTitles.count {
                     let attributedText = NSAttributedString(string: chunk[elementIndex][titleIndex], attributes: textAttributes)
@@ -133,8 +133,8 @@ extension PDFCreator {
                     attributedText.draw(in: textRect)
                 }
                 
-                // Draw content's 3 vertical lines
-                for verticalLineIndex in 0..<4 {
+                // Draw content's vertical lines
+                for verticalLineIndex in 0...tableDataHeaderTitles.count {
                     let tabX = CGFloat(verticalLineIndex) * tabWidth
                     drawContext.move(to: CGPoint(x: tabX + defaultOffset, y: yPosition))
                     drawContext.addLine(to: CGPoint(x: tabX + defaultOffset, y: yPosition + defaultStartY))
