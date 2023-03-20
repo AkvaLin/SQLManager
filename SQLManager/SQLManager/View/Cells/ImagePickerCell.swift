@@ -73,7 +73,6 @@ class ImagePickerCell: Cell {
         
         if let image = image {
             let imageViewController = ImageViewController(image: image)
-            print(image)
             parentViewController.navigationController?.pushViewController(imageViewController, animated: true)
         } else {
             viewModel.getImage(tableName: "product", tableSchema: "dbo", columnName: columnName, dataModel: dataModel) { image in
