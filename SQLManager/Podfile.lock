@@ -1,16 +1,40 @@
 PODS:
+  - KRActivityIndicatorView (3.0.7)
+  - KRProgressHUD (3.4.7):
+    - KRActivityIndicatorView (= 3.0.7)
+  - SnapKit (5.6.0)
+  - SpreadsheetView (0.9.1)
   - SQLClient (1.0.0)
+  - SwiftAlgorithms (1.0.0)
+  - SwiftyButton (0.8.2)
 
 DEPENDENCIES:
+  - KRProgressHUD
+  - SnapKit
+  - SpreadsheetView
   - SQLClient (~> 1.0.0)
+  - SwiftAlgorithms
+  - SwiftyButton
 
 SPEC REPOS:
   trunk:
+    - KRActivityIndicatorView
+    - KRProgressHUD
+    - SnapKit
+    - SpreadsheetView
     - SQLClient
+    - SwiftAlgorithms
+    - SwiftyButton
 
 SPEC CHECKSUMS:
+  KRActivityIndicatorView: ad69e89c4ce40c986cf580595be4829dcad0e35a
+  KRProgressHUD: a248f0bc6c9c2aed40a37b76e03ffecc7f85c887
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SpreadsheetView: 688dbd19f2b355df0eb09e486266fd913a013449
   SQLClient: 262f95dad0467f173bbca5a7cb4fdcaa6c08affd
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  SwiftyButton: 5b0ef314e9cf61cf8a83e456ddd1ea1f53f30598
 
-PODFILE CHECKSUM: 996c3d36595b8e7cabf1b41a87615f160720c69b
+PODFILE CHECKSUM: 6f7a01eafef5c3587205187685a9b8bed6a0eeda
 
 COCOAPODS: 1.12.0

@@ -6,5 +6,11 @@ target 'SQLManager' do
   use_frameworks!
 
   # Pods for SQLManager
-    pod 'SQLClient', '~> 1.0.0'
+  pod 'SQLClient', '~> 1.0.0'
+  pod 'SwiftyButton'
+  pod 'SnapKit'
+  pod 'SpreadsheetView'
+  pod 'SwiftAlgorithms'
+  pod "KRProgressHUD"
+  
 end
