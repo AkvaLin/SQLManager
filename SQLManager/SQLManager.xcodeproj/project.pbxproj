@@ -30,6 +30,7 @@
 		F6C3915B29B08191009E36B4 /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */; };
 		F6C6537529C4903300CAEC87 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C6537429C4903300CAEC87 /* ImagePickerCell.swift */; };
 		F6C6537729C4917D00CAEC87 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */; };
+		F6D27E9329CA52BC0034A8FC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D27E9229CA52BC0034A8FC /* ProfileViewController.swift */; };
 		F6F06E5B29C2F340003F0BFA /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		F6C6537429C4903300CAEC87 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		F6D27E9229CA52BC0034A8FC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +107,7 @@
 		F6163F5D29B344B500A4B07A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F6D8A57D29CA5BEA00D6918F /* Storyboards */,
 				F6C796E429B4ADAC009750F2 /* Cells */,
 				F67D7C1329AFD34500747976 /* MainViewController.swift */,
 				F6C3915A29B08191009E36B4 /* ConnectionViewController.swift */,
@@ -112,6 +115,7 @@
 				F6BE760829B607080083DD33 /* EditRowViewController.swift */,
 				F666061229C1AD9900554652 /* PDFPreviewViewController.swift */,
 				F6F06E5A29C2F340003F0BFA /* ImageViewController.swift */,
+				F6D27E9229CA52BC0034A8FC /* ProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -155,7 +159,6 @@
 				F6163F5E29B344DB00A4B07A /* Resources */,
 				F6163F5A29B3427800A4B07A /* TabBarController.swift */,
 				F6B5E2A229B0D44300CB7D18 /* ViewModel.swift */,
-				F67D7C1A29AFD34800747976 /* LaunchScreen.storyboard */,
 				F67D7C1D29AFD34800747976 /* Info.plist */,
 			);
 			path = SQLManager;
@@ -180,6 +183,14 @@
 				F6C6537629C4917D00CAEC87 /* DatePickerCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		F6D8A57D29CA5BEA00D6918F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				F67D7C1A29AFD34800747976 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +313,7 @@
 				F6C6537729C4917D00CAEC87 /* DatePickerCell.swift in Sources */,
 				F666061329C1AD9900554652 /* PDFPreviewViewController.swift in Sources */,
 				F6163F6229B352F300A4B07A /* Observable<T>.swift in Sources */,
+				F6D27E9329CA52BC0034A8FC /* ProfileViewController.swift in Sources */,
 				F6BE760929B607080083DD33 /* EditRowViewController.swift in Sources */,
 				F67D7C1429AFD34500747976 /* MainViewController.swift in Sources */,
 				F640965C29B4D19200C45706 /* ColumnDataTypeModel.swift in Sources */,

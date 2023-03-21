@@ -93,6 +93,7 @@ class ConnectionViewController: UIViewController {
         serverAddressTextField.delegate = self
         
         setupKeyboardHidding()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {

@@ -11,5 +11,6 @@ target 'SQLManager' do
   pod 'SnapKit'
   pod 'SpreadsheetView'
   pod 'SwiftAlgorithms'
+  pod "KRProgressHUD"
   
 end

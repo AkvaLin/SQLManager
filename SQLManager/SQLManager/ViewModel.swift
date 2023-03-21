@@ -63,7 +63,8 @@ class ViewModel {
         }
     }
     
-    func fetchTableData(tableName: String = "product", tableSchema: String = "dbo") {
+    func fetchTableData(tableName: String = UserDefaults.standard.tableName ?? "",
+                        tableSchema: String = UserDefaults.standard.tableSchema ?? "") {
         guard sqlClient.isConnected() else { return }
         
         DispatchQueue.global(qos: .userInteractive).async {
@@ -92,7 +93,10 @@ class ViewModel {
         return replacedString
     }
     
-    public func addRow(tableName: String, tableSchema: String, namesWithValues: [String: InsertModel], completion: @escaping (Bool) -> Void) throws {
+    public func addRow(tableName: String = UserDefaults.standard.tableName ?? "",
+                       tableSchema: String = UserDefaults.standard.tableSchema ?? "",
+                       namesWithValues: [String: InsertModel],
+                       completion: @escaping (Bool) -> Void) throws {
         let notNullable = getNotNullableColumns()
         var emptyFields = [String]()
         notNullable.forEach { name in
@@ -123,7 +127,10 @@ class ViewModel {
         }
     }
     
-    public func deleteRow(dictColumnNamesColumnValues: [String: String], tableName: String, tableSchema: String, completion: @escaping(Bool) -> Void) {
+    public func deleteRow(dictColumnNamesColumnValues: [String: String],
+                          tableName: String = UserDefaults.standard.tableName ?? "",
+                          tableSchema: String = UserDefaults.standard.tableSchema ?? "",
+                          completion: @escaping(Bool) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             var request = "DELETE FROM \(tableSchema).\(tableName) WHERE "
             request += self.getWhereStatement(keyValue: dictColumnNamesColumnValues)
@@ -132,7 +139,11 @@ class ViewModel {
         }
     }
     
-    public func updateRow(prevValues: [String: String], newValues: [String: String], tableName: String, tableSchema: String, completion: @escaping(Bool) -> Void) {
+    public func updateRow(prevValues: [String: String],
+                          newValues: [String: String],
+                          tableName: String = UserDefaults.standard.tableName ?? "",
+                          tableSchema: String = UserDefaults.standard.tableSchema ?? "",
+                          completion: @escaping(Bool) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             var request = "UPDATE \(tableSchema).\(tableName) SET "
             guard let identityColumns = self.notIdentityColumnsWithDataType.value else { return }
@@ -151,7 +162,11 @@ class ViewModel {
         }
     }
     
-    public func getImage(tableName: String, tableSchema: String, columnName: String, dataModel: [String: String], completion: @escaping (UIImage?) -> Void) {
+    public func getImage(tableName: String,
+                         tableSchema: String,
+                         columnName: String,
+                         dataModel: [String: String],
+                         completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async {
             var request = "SET TEXTSIZE 2147483647 SELECT \(columnName) FROM \(tableSchema).\(tableName) WHERE "
             request += self.getWhereStatement(keyValue: dataModel)
@@ -200,12 +215,30 @@ class ViewModel {
         
         return data
     }
+    
+    public func clearAllData() {
+        UserDefaults.resetDefaults()
+        sqlClient.disconnect()
+        
+        tableData.value = [[String]]()
+        tableHeaders.value = [String]()
+        notIdentityColumnsWithDataType.value = [ColumnDataTypeModel]()
+    }
+    
+    public func changeTable(tableSchema: String, tableName: String) {
+        UserDefaults.standard.tableSchema = tableSchema
+        UserDefaults.standard.tableName = tableName
+        
+        fetchTableData()
+        getColumnTypes()
+    }
 }
 
 // MARK: - Get Methods
 extension ViewModel {
     
-    public func getColumnTypes(tableName: String, tableSchema: String) {
+    public func getColumnTypes(tableName: String = UserDefaults.standard.tableName ?? "",
+                               tableSchema: String = UserDefaults.standard.tableSchema ?? "") {
         guard sqlClient.isConnected() else { return }
         
         DispatchQueue.global(qos: .userInitiated).async {

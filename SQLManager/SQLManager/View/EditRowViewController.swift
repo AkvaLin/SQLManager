@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SpreadsheetView
+import KRProgressHUD
 
 class EditRowViewController: AddRowViewController {
     
@@ -32,8 +33,14 @@ class EditRowViewController: AddRowViewController {
         
         navigationItem.title = "Редактирование"
         
+        KRProgressHUD
+            .set(activityIndicatorViewColors: [.systemBlue, .systemMint])
+            .set(style: .custom(background: .systemGray5, text: .label, icon: .clear))
+            .show(withMessage: "Загрузка...")
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.setupTextFields()
+            KRProgressHUD.dismiss()
         }
     }
     
@@ -80,17 +87,17 @@ class EditRowViewController: AddRowViewController {
             namesWithValues[name] = value
         }
         
-        viewModel.updateRow(prevValues: dataModel, newValues: namesWithValues, tableName: "product", tableSchema: "dbo") { [weak self] completion in
+        viewModel.updateRow(prevValues: dataModel, newValues: namesWithValues) { [weak self] completion in
             if completion {
-                self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
+                self?.viewModel.fetchTableData()
             }
         }
     }
     
     @objc private func deleteRow() {
-        viewModel.deleteRow(dictColumnNamesColumnValues: dataModel, tableName: "product", tableSchema: "dbo") { [weak self] completion in
+        viewModel.deleteRow(dictColumnNamesColumnValues: dataModel) { [weak self] completion in
             if completion {
-                self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
+                self?.viewModel.fetchTableData()
                 DispatchQueue.main.async {
                     self?.navigationController?.popViewController(animated: true)
                 }

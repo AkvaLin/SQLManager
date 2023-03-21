@@ -37,7 +37,8 @@ class TabBarController: UITabBarController {
     private func setupViewControllers() {
         viewControllers = [
             createNavController(for: MainViewController(viewModel: viewModel), image: UIImage(systemName: "tablecells") ?? UIImage()),
-            createNavController(for: AddRowViewController(viewModel: viewModel), image: UIImage(systemName: "plus.circle") ?? UIImage())
+            createNavController(for: AddRowViewController(viewModel: viewModel), image: UIImage(systemName: "plus.circle") ?? UIImage()),
+            createNavController(for: ProfileViewController(viewModel: viewModel), image: UIImage(systemName: "person") ?? UIImage())
         ]
     }
     

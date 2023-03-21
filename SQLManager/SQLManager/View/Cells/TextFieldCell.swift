@@ -20,7 +20,7 @@ class TextFieldCell: Cell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        backgroundColor = .systemBackground
         textField.frame = contentView.bounds
     }
     

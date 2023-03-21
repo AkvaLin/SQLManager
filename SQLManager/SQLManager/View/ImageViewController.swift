@@ -31,7 +31,7 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLayoutSubviews() {

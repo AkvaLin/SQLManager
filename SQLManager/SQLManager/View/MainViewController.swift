@@ -7,6 +7,7 @@
 
 import UIKit
 import SpreadsheetView
+import KRProgressHUD
 
 class MainViewController: UIViewController {
     
@@ -69,19 +70,35 @@ class MainViewController: UIViewController {
     
     private func bind() {
         viewModel.tableData.bind { [weak self] _ in
+            KRProgressHUD.dismiss()
             self?.sheet.reloadData()
             self?.sheet.layoutIfNeeded()
         }
     }
     
     @objc func updateData() {
+        KRProgressHUD
+            .set(activityIndicatorViewColors: [.systemBlue, .systemMint])
+            .set(style: .custom(background: .systemGray5, text: .label, icon: .clear))
+            .show(withMessage: "Загрузка...")
         viewModel.fetchTableData()
     }
     
     @objc func presentPDFView() {
-        let pdfData = viewModel.createPDF()
-        let vc = PDFPreviewViewController(pdfData: pdfData)
-        navigationController?.pushViewController(vc, animated: true)
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            DispatchQueue.main.async {
+                KRProgressHUD
+                    .set(activityIndicatorViewColors: [.systemBlue, .systemMint])
+                    .set(style: .custom(background: .systemGray5, text: .label, icon: .clear))
+                    .show(withMessage: "Загрузка...")
+            }
+            guard let pdfData = self?.viewModel.createPDF() else { return }
+            DispatchQueue.main.async {
+                KRProgressHUD.dismiss()
+                let vc = PDFPreviewViewController(pdfData: pdfData)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }
 

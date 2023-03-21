@@ -23,6 +23,9 @@ class DatePickerCell: Cell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        backgroundColor = .systemBackground
+        
         contentView.addSubview(picker)
         picker.frame = contentView.bounds
     }

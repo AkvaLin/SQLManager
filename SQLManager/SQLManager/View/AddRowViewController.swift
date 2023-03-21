@@ -49,7 +49,7 @@ class AddRowViewController: UIViewController {
         tableSheetView.register(DatePickerCell.self, forCellWithReuseIdentifier: DatePickerCell.identifier)
         tableSheetView.register(ImagePickerCell.self, forCellWithReuseIdentifier: ImagePickerCell.identifier)
         
-        viewModel.getColumnTypes(tableName: "product", tableSchema: "dbo")
+        viewModel.getColumnTypes()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"),
                                                             style: .plain,
@@ -60,6 +60,7 @@ class AddRowViewController: UIViewController {
         
         setupConstraints()
         bind()
+        hideKeyboardWhenTappedAround()
         setupKeyboardHidding()
     }
     
@@ -108,9 +109,9 @@ class AddRowViewController: UIViewController {
         }
 
         do {
-            try viewModel.addRow(tableName: "product", tableSchema: "dbo", namesWithValues: namesWithValues) { [weak self] completion in
+            try viewModel.addRow(namesWithValues: namesWithValues) { [weak self] completion in
                 if completion {
-                    self?.viewModel.fetchTableData(tableName: "product", tableSchema: "dbo")
+                    self?.viewModel.fetchTableData()
                     for rowIndex in 0..<(self?.tableSheetView.numberOfRows ?? 0) {
                         DispatchQueue.main.async {
                             (self?.tableSheetView.cellForItem(at: IndexPath(row: rowIndex, column: 1)) as? TextFieldCell)?.clear()

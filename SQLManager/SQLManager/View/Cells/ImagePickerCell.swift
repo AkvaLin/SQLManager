@@ -21,14 +21,14 @@ class ImagePickerCell: Cell {
     
     private var viewModel = ViewModel()
     
-    private let showButton: UIButton = {
+    private lazy var showButton: UIButton = {
         let bttn = UIButton()
         bttn.setImage(UIImage(systemName: "photo"), for: .normal)
         bttn.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
         return bttn
     }()
     
-    private let pickButton: UIButton = {
+    private lazy var pickButton: UIButton = {
         let bttn = UIButton()
         bttn.setImage(UIImage(systemName: "pencil"), for: .normal)
         bttn.addTarget(self, action: #selector(pickButtonTapped), for: .touchUpInside)
@@ -37,6 +37,9 @@ class ImagePickerCell: Cell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        backgroundColor = .systemBackground
+        
         contentView.addSubview(showButton)
         contentView.addSubview(pickButton)
         

@@ -17,6 +17,7 @@ class LabelCell: Cell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        backgroundColor = .systemBackground
         label.frame = contentView.bounds
     }
     

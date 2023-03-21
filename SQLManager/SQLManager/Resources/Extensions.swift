@@ -9,11 +9,13 @@ import Foundation
 import UIKit
 
 extension UserDefaults {
-    private enum UserDefaultsKeys: String {
+    private enum UserDefaultsKeys: String, CaseIterable {
         case hostname
         case username
         case password
         case database
+        case tableSchema
+        case tableName
     }
     
     var hostname: String? {
@@ -59,6 +61,34 @@ extension UserDefaults {
                      forKey: UserDefaultsKeys.database.rawValue)
         }
     }
+    
+    var tableSchema: String? {
+        get {
+            string(forKey: UserDefaultsKeys.tableSchema.rawValue)
+        }
+        
+        set {
+            setValue(newValue,
+                     forKey: UserDefaultsKeys.tableSchema.rawValue)
+        }
+    }
+    
+    var tableName: String? {
+        get {
+            string(forKey: UserDefaultsKeys.tableName.rawValue)
+        }
+        
+        set {
+            setValue(newValue,
+                     forKey: UserDefaultsKeys.tableName.rawValue)
+        }
+    }
+    
+    static func resetDefaults() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
+    }
 }
 
 extension UIViewController {
@@ -85,6 +115,16 @@ extension UIViewController {
     
     @objc private func keyboardWillHide(sender: NSNotification) {
         view.frame.origin.y = 0
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
