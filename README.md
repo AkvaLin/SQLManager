@@ -7,7 +7,6 @@
 <p align="center">
    <img src="https://img.shields.io/badge/iOS-15.0-blue">
    <img src="https://img.shields.io/badge/Version-v1.0-green">
-   <img src="https://img.shields.io/badge/License-MIT-orange">
 </p>
 
 ## About
