@@ -17,7 +17,7 @@ edit and export SQL tables.
 ## Screenshots
 
 | Connection | Table | Profile |
-| ------------- |:-------------|:-------------:|
+| :-------------: |:-------------:|:-------------:|
 | <img src="https://i.ibb.co/zm0YhQc/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-38-28.png"> | <img src="https://i.ibb.co/6mz39Ss/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-42-37.png"> | <img src="https://i.ibb.co/6gXXvmC/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-39-43.png"> |
 | Insert | Dark Theme | PDF |
 | <img src="https://i.ibb.co/cNXf5D0/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-42-21.png"> | <img src="https://i.ibb.co/qD7PZfy/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-45-38.png"> | <img src="https://i.ibb.co/p15PNsZ/Simulator-Screen-Shot-i-Phone-14-Pro-2023-03-22-at-02-44-19.png"> |
